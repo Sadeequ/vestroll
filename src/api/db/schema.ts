@@ -210,15 +210,6 @@ export const kybVerifications = pgTable("kyb_verifications", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const timesheets = pgTable("timesheets", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  employeeId: uuid("employee_id").references(() => employees.id, { onDelete: "cascade" }).notNull(),
-  organizationId: uuid("organization_id").references(() => organizations.id, { onDelete: "cascade" }).notNull(),
-  totalHours: integer("total_hours").notNull(),
-  rate: integer("rate").notNull(),
-  totalAmount: integer("total_amount").notNull(),
-  status: timesheetStatusEnum("status").default("Pending").notNull(),
-  submittedAt: timestamp("submitted_at").defaultNow().notNull(),
 export const contracts = pgTable("contracts", {
   id: uuid("id").primaryKey().defaultRandom(),
   organizationId: uuid("organization_id").references(() => organizations.id, { onDelete: "cascade" }).notNull(),
@@ -326,4 +317,14 @@ export const timeOffRequests = pgTable("time_off_requests", {
 }, (table) => [
   index("time_off_requests_organization_id_idx").on(table.organizationId),
   index("time_off_requests_status_idx").on(table.status),
+]);
+
+export const passwordResets = pgTable("password_resets", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }).notNull(),
+  tokenHash: varchar("token_hash", { length: 64 }).notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("password_resets_user_id_idx").on(table.userId),
 ]);
