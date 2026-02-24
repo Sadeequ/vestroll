@@ -3,11 +3,9 @@
 import { useState } from "react";
 import avatar from "@/../public/avatar/avatar.png";
 import Image, { StaticImageData } from "next/image";
-import MobileHeader from "./mobile-header";
 import DesktopHeader from "./desktop-header";
 import Sidebar from "./sidebar";
-import Link from "next/link";
-import { Bell, Menu, MenuSquare, Search } from "lucide-react";
+import { Bell, Menu, Search } from "lucide-react";
 import { ThemeToggle } from "../shared/theme-toggle";
 
 interface AppShellProps {
@@ -41,14 +39,14 @@ export default function AppShell({
           onCloseMobile={() => setMobileOpen(false)}
         />
 
-        <div className="flex-1">
+        <div className="flex-1 lg:ml-72">
           {/* Top Navigation Header */}
           <DesktopHeader user={user} />
 
-          <header className="bg-white border-b border-[#DCE0E5] px-4 sm:px-6 py-2 md:hidden dark:bg-gray-900 dark:border-gray-800">
+          <header className="bg-white border-b border-[#DCE0E5] px-4 sm:px-6 py-2 lg:hidden dark:bg-gray-900 dark:border-gray-800">
             <div className="flex items-center justify-between">
-              {/* Center - Search bar */}
-              <div className="flex-1 md:hidden">
+              {/* Hamburger menu button */}
+              <div className="flex-1">
                 <button
                   onClick={() => setMobileOpen(true)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors dark:hover:bg-gray-800"
@@ -58,21 +56,10 @@ export default function AppShell({
                 </button>
               </div>
 
-              <div className="hidden md:flex  max-w-md flex-1">
-                <div className="flex items-center justify-between bg-[#F5F6F7] border border-[#DCE0E5] rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-purple-500 focus-within:border-transparent transition-all">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="flex-1 bg-transparent text-[#7F8C9F] focus:outline-none"
-                  />
-                  <Search className="w-5 h-5 text-[#7F8C9F] ml-2" />
-                </div>
-              </div>
-
               {/* Right side - User profile */}
               <div className="flex items-center gap-4 ml-4">
-                <Search className="w-5 h-5 md:hidden text-[#7F8C9F] ml-2" />
-                <div className="md:hidden">
+                <Search className="w-5 h-5 text-[#7F8C9F] ml-2" />
+                <div>
                   <ThemeToggle />
                 </div>
                 <button className="relative p-2 hover:bg-gray-100 bg-white border border-[#DCE0E5] rounded-full transition-colors dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

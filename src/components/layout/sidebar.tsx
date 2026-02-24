@@ -151,7 +151,7 @@ export default function Sidebar({
   // Desktop sidebar
   return (
     <>
-      <aside className="hidden lg:flex lg:w-72 lg:flex-col lg:border-r lg:border-[#e5e7eb] lg:bg-white dark:lg:bg-gray-900 dark:lg:border-gray-800">
+      <aside className="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:w-72 lg:flex-col lg:border-r lg:border-[#e5e7eb] lg:bg-white lg:overflow-y-auto dark:lg:bg-gray-900 dark:lg:border-gray-800">
         <div className="flex flex-col h-full px-4 py-6">
           <div className="flex items-center justify-between px-2 mb-10">
             <Link

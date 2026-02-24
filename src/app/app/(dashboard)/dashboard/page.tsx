@@ -25,7 +25,7 @@ export default function DashboardPage() {
       <div className="p-2 sm:p-4">
         <OnboardingCheckList />
       </div>
-      <div className="flex  gap-4 flex-col-reverse w-full lg:flex-row p-2 sm:p-4">
+      <div className="flex flex-col-reverse w-full gap-4 p-2 xl:flex-row sm:p-4">
         <RequiringAttention />
         <QuickAction />
       </div>
@@ -33,7 +33,7 @@ export default function DashboardPage() {
       <div
         role="button"
         aria-label="customer care center"
-        className="fixed bottom-10 bg-primary-500 size-14 flex items-center justify-center rounded-full right-10"
+        className="fixed flex items-center justify-center rounded-full bottom-10 bg-primary-500 size-14 right-10"
       >
         <HeadPhoneIcon />
       </div>
