@@ -16,17 +16,17 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { name: "Dashboard", href: "/app/dashboard", iconSrc: "/dashboard.svg" },
-  { name: "Contracts", href: "/app/contracts", iconSrc: "/contracts.svg" },
+  { name: "Dashboard", href: "/dashboard", iconSrc: "/dashboard.svg" },
+  { name: "Contracts", href: "/contracts", iconSrc: "/contracts.svg" },
   {
     name: "Team management",
-    href: "/app/team-management",
+    href: "/team-management",
     iconSrc: "/team.svg",
   },
-  { name: "Finance", href: "/app/finance", iconSrc: "/wallet.svg" },
-  { name: "Payroll", href: "/app/payroll", iconSrc: "/payroll.svg" },
-  { name: "Invoices", href: "/app/invoices", iconSrc: "/invoice.svg" },
-  { name: "Settings", href: "/app/settings", iconSrc: "/Settings.png" },
+  { name: "Finance", href: "/finance", iconSrc: "/wallet.svg" },
+  { name: "Payroll", href: "/payroll", iconSrc: "/payroll.svg" },
+  { name: "Invoices", href: "/invoices", iconSrc: "/invoice.svg" },
+  { name: "Settings", href: "/settings", iconSrc: "/Settings.png" },
 ];
 
 function classNames(...classes: Array<string | false | undefined>) {

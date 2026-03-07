@@ -67,6 +67,11 @@ export class AuthService {
     });
 
     if (!response.ok) {
+      if (response.status === 500) {
+        throw new Error(
+          "Internal Server Error: Please try again later or contact support.",
+        );
+      }
       const error = await response.json();
       throw new Error(error.message || "Failed to send reset link");
     }
@@ -82,6 +87,11 @@ export class AuthService {
     });
 
     if (!response.ok) {
+      if (response.status === 500) {
+        throw new Error(
+          "Internal Server Error: Please try again later or contact support.",
+        );
+      }
       const error = await response.json();
       throw new Error(error.message || "Password reset failed");
     }

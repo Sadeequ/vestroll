@@ -16,7 +16,7 @@ function PageHeader() {
           </h1>
         </div>
         <Link
-          href={"/app/contracts/create"}
+          href={"/contracts/create"}
           className="inline-flex items-center justify-center px-4 py-2 h-12 ml-auto md:py-2 bg-[#5E2A8C] text-white font-medium rounded-full hover:bg-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#5E2A8C] focus:ring-offset-2 transition-colors duration-200 gap-2 whitespace-nowrap dark:bg-purple-600 dark:hover:bg-purple-700"
         >
           <PlusIcon className="h-4 w-4" />

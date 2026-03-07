@@ -36,6 +36,7 @@ export const useAuth = (): UseAuthReturn => {
       router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
+      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +54,7 @@ export const useAuth = (): UseAuthReturn => {
       router.push("/add-password");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
+      throw err;
     } finally {
       setIsLoading(false);
     }
