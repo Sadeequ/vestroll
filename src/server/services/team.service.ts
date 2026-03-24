@@ -3,10 +3,12 @@ import { eq } from "drizzle-orm";
 
 export class TeamService {
   static async addEmployee(data: { email: string; organizationId?: string }) {
+    const normalizedEmail = data.email.toLowerCase().trim();
+
     const [existingUser] = await db
       .select()
       .from(users)
-      .where(eq(users.email, data.email))
+      .where(eq(users.email, normalizedEmail))
       .limit(1);
 
     if (existingUser) {
@@ -18,7 +20,7 @@ export class TeamService {
     const [newUser] = await db
       .insert(users)
       .values({
-        email: data.email,
+        email: normalizedEmail,
 
         firstName: "",
         lastName: "",

@@ -5,10 +5,12 @@ export type UserStatus = (typeof userStatusEnum.enumValues)[number];
 
 export class UserService {
   static async findByEmail(email: string) {
+    const normalizedEmail = email.toLowerCase().trim();
+
     const [user] = await db
       .select()
       .from(users)
-      .where(eq(users.email, email))
+      .where(eq(users.email, normalizedEmail))
       .limit(1);
 
     return user || null;
