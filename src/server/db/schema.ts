@@ -76,6 +76,14 @@ export const approvalStatusEnum = pgEnum("approval_status", [
   "rejected",
 ]);
 export const timeOffTypeEnum = pgEnum("time_off_type", ["paid", "unpaid"]);
+export const auditEventEnum = pgEnum("audit_event", [
+  "ROLE_CHANGE",
+  "EMAIL_CHANGE",
+  "BIOMETRIC_ENROLLMENT",
+  "PASSWORD_CHANGE",
+  "ACCOUNT_DELETION",
+  "SECURITY_CHANGE",
+]);
 
 export const organizations = pgTable("organizations", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -96,6 +104,7 @@ export const organizations = pgTable("organizations", {
   billingCountry: varchar("billing_country", { length: 255 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at"),
 });
 
 export const users = pgTable("users", {
@@ -126,6 +135,8 @@ export const users = pgTable("users", {
   oauthProvider: oauthProviderEnum("oauth_provider"),
   oauthId: varchar("oauth_id", { length: 255 }),
   lastLoginAt: timestamp("last_login_at"),
+  lastLoginIp: varchar("last_login_ip", { length: 45 }),
+  lastLoginUa: text("last_login_ua"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -193,23 +204,40 @@ export const trustedDevices = pgTable("trusted_devices", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const sessions = pgTable("sessions", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .references(() => users.id, { onDelete: "cascade" })
-    .notNull(),
-  refreshTokenHash: varchar("refresh_token_hash", { length: 255 }).notNull(),
-  deviceInfo: text("device_info"),
-  expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  lastUsedAt: timestamp("last_used_at"),
-});
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    refreshTokenHash: varchar("refresh_token_hash", { length: 255 }).notNull(),
+    deviceInfo: text("device_info"),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    lastUsedAt: timestamp("last_used_at"), 
+  },
+  (table) => [index("sessions_user_id_idx").on(table.userId)]
+);
 
 export const loginAttempts = pgTable("login_attempts", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: varchar("email", { length: 255 }).notNull(),
   ipAddress: varchar("ip_address", { length: 45 }),
   userAgent: text("user_agent"),
+  lastLoginIp: varchar("last_login_ip", { length: 45 }),
+  lastLoginUa: text("last_login_ua"),
+  success: boolean("success").notNull(),
+  failureReason: text("failure_reason"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const biometricLogs = pgTable("biometric_logs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+  email: varchar("email", { length: 255 }),
+  lastLoginIp: varchar("last_login_ip", { length: 45 }),
+  lastLoginUa: text("last_login_ua"),
   success: boolean("success").notNull(),
   failureReason: text("failure_reason"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -451,3 +479,14 @@ export const employeeRelations = relations(employees, (helpers: any) => ({
   }),
   milestones: helpers.many(milestones),
 }));
+
+export const auditLogs = pgTable("audit_logs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+  event: auditEventEnum("event").notNull(),
+  oldValue: text("old_value"),
+  newValue: text("new_value"),
+  ipAddress: varchar("ip_address", { length: 45 }),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
