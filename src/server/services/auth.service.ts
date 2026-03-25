@@ -441,10 +441,7 @@ export class AuthService {
     return { challenge };
   }
 
-  /**
-   * Ensures the challenge was issued by us, is unexpired, and deletes it (one-time use).
-   * @throws {BadRequestError} "Expired" if the challenge TTL elapsed; "Invalid challenge" if unknown or reused.
-   */
+  
   static async consumePasskeyRegistrationChallenge(
     userId: string,
     challenge: string,
