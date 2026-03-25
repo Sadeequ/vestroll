@@ -112,6 +112,7 @@ export class OAuthUserProvisioningService {
         oauthId: data.oauthId,
         passwordHash: null,
         status: "active",
+        signerType: "Email",
         lastLoginAt: new Date(),
       })
       .returning();

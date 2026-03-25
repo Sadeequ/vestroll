@@ -1,7 +1,9 @@
 import { eq } from "drizzle-orm";
-import { db, users, userStatusEnum } from "../db";
+import { db, users, userStatusEnum, signerTypeEnum } from "../db";
 
 export type UserStatus = (typeof userStatusEnum.enumValues)[number];
+export type SignerType = (typeof signerTypeEnum.enumValues)[number];
+
 
 // Whitelist of allowed domains for avatar URLs
 const ALLOWED_AVATAR_DOMAINS = [
